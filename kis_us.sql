@@ -4,16 +4,35 @@ select * from kis_token ;
 
 select * from holding_us_stock_details;
 
-select * from us_stock_price where 1=1
-and symbol ='ARKQ';
+select * from us_stock_price;
+
+alter table us_stock_price add primary key ( symbol(8) , date);
+
+select date, count(1) from us_stock_price GROUP BY date HAVING COUNT(*) >= 2000;
+
+select * from us_stock_price where 1=1 and symbol ='SPY'
+order by date;
+
+SELECT date max_date FROM us_stock_price GROUP BY date HAVING COUNT(*) >= 6000 ORDER BY date DESC LIMIT 1;
+
+delete from us_stock_price where symbol in( 'ARKQ', 'SPY');
+commit;
+
+select * from us_etf_list;
 
 # 주식 리스트 
-select * from us_stock_list where 1=1;
+select * from us_stock_list where 1=1 
+and ins_date > '2025-01-20';
 
 select * from us_stock_list where 1=1
 and symbol like 'ARKQ';
 
-delete from us_stock_list where symbol = 'ARKQ'
+SET SQL_SAFE_UPDATES = 0;
+SET SQL_SAFE_UPDATES = 1;
+commit;
+
+
+delete from us_stock_list where symbol = 'ARKQ';
 
 # 주식 리스트 
 select count(1) from us_stock_list where 1=1 
