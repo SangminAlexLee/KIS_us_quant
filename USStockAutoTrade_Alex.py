@@ -120,6 +120,9 @@ try:
         
         # 06시 이후 프로그램 종료 
         elif (t_start - timedelta(hours=16) > t_now ) and (t_now > t_exit) :  
+            print(f't_start:{t_start}')
+            print(f't_now:{t_now}')
+            print(f't_exit:{t_exit}')
             send_message("거래시간이 아니므로 프로그램을 종료합니다.") 
             break            
         else: # 거래시간 외 프로그램 종료
