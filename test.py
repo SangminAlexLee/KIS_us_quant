@@ -12,6 +12,7 @@ import shared_vars
 from KIS_Functions import *
 import sys
 import os
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 with open('config.yaml', encoding='UTF-8') as f:
@@ -754,7 +755,21 @@ try:
         print('ind == 0')
     elif ind == -6:
 
-        delete_stock_from_table('holding_stock_details_test', '277810')
+        # delete_stock_from_table('holding_stock_details_test', '277810')
+        shared_vars.df_fav_stocks = get_group_stocks('001') # 000 관심그룹 
+        
+        print(shared_vars.df_fav_stocks.code[0])
+        symbol = shared_vars.df_fav_stocks.code[0]
+        engine, con, mycursor = db_conn() 
+        sql = f"""select market 
+                    from us_stock_list 
+                    where Symbol = '{symbol}'"""
+        print(f'sql: {sql}')
+        mycursor.execute(sql)
+        result = mycursor.fetchall()
+        market = result[0]['market']
+        print(f'market : {market}')
+
 
     elif ind == -5:    
         # profitcut_sell()

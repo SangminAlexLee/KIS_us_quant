@@ -4,7 +4,7 @@
 # Description: Check if KoreaStockAutoTrade_Alex.py is running; if not, start it.
 
 # Define the script to execute
-SCRIPT_NAME="KoreaStockAutoTrade_Alex.py"
+SCRIPT_NAME="USStockAutoTrade_Alex.py"
 
 # Find the process ID (PID) of the running script
 PID=$(ps aux | grep "$SCRIPT_NAME" | grep -v grep | awk '{print $2}')
@@ -20,7 +20,7 @@ else
 fi
 
 # Navigate to the script directory (adjust as needed)
-SCRIPT_DIR="/home/ec2-user/quant_invest/KIS_quant"  # 변경: KoreaStockAutoTrade_Alex.py가 위치한 디렉토리
+SCRIPT_DIR="/home/ec2-user/quant_invest/KIS_us_quant"  # 변경: KoreaStockAutoTrade_Alex.py가 위치한 디렉토리
 cd "$SCRIPT_DIR" || exit
 
 # Activate Python virtual environment (if needed)
