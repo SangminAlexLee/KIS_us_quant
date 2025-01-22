@@ -26,14 +26,18 @@ cd "$SCRIPT_DIR" || exit
 # Activate Python virtual environment (if needed)
 # source /path/to/venv/bin/activate  # 필요 시 가상환경 활성화
 
+# Generate a log file name with the current date and time
+LOG_FILE="${SCRIPT_NAME%.py}_$(date '+%Y-%m-%d_%H-%M-%S').log"
+
 # Start the script in the background
 echo "Starting $SCRIPT_NAME in the background..."
-nohup python3 "$SCRIPT_NAME" > "${SCRIPT_NAME%.py}.log" 2>&1 &
+nohup python3 -u "$SCRIPT_NAME" > "$LOG_FILE" &
 
 # Get the new process ID
 NEW_PID=$(ps aux | grep "$SCRIPT_NAME" | grep -v grep | awk '{print $2}')
 if [ -n "$NEW_PID" ]; then
   echo "Process started successfully: $SCRIPT_NAME (PID: $NEW_PID)"
+  echo "Logs are being written to $LOG_FILE"
 else
   echo "Failed to start the process."
 fi
