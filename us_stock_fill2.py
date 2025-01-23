@@ -117,7 +117,7 @@ if len(df_us_list) > 0 :
     else:
         try:
             engine, con, mycursor = db_conn()
-            sql  = f"delete from us_stock_price where date >= '{start_date}'"
+            sql  = f"delete from us_stock_price where date >= '{start_date}' and symbol not in ( select symbol from us_etf_list )"
             print(f'sql : {sql}')
             mycursor.execute(sql)
             result = mycursor.fetchall()
@@ -137,7 +137,7 @@ if len(df_us_list) > 0 :
             for attempt in range(retries):
                 try:
                     stock = fdr.DataReader(symbol, start_date, end_date)
-                    # print(f'stock after download : {stock}')
+                    print(f'stock after download : {stock}')
                     break  # 성공하면 루프 탈출
                 except Exception as e:
                     print(f'Error fetching data for {symbol}, attempt {attempt + 1}/{retries}: {e}')
@@ -151,8 +151,9 @@ if len(df_us_list) > 0 :
             stock.reset_index(inplace=True)
             stock = stock.rename(columns={'index':'Date'})
             stock['Symbol'] = symbol
+            stock = stock.loc[stock.Date > start_date]
 
-            # print(f'stock after reset index : {stock}')
+            print(f'stock after reset index : {stock}')
 
             if len(stock) > 1 :
                 stock =  stock[['Symbol', 'Date', 'Close', 'Adj Close', 'Volume']]
