@@ -4,7 +4,7 @@
 # Description: Kill the running KoreaStockAutoTrade_Alex.py process
 
 # Define the script name
-SCRIPT_NAME="KoreaStockAutoTrade_Alex.py"
+SCRIPT_NAME="USStockAutoTrade_Alex.py"
 
 # Find the process ID (PID) of the running script
 PID=$(ps aux | grep "$SCRIPT_NAME" | grep -v grep | awk '{print $2}')
