@@ -92,7 +92,8 @@ if len(df_us_list) > 0 :
     try: 
         engine, con, mycursor = db_conn()
         # sql = "SELECT max(date) max_date FROM us_stock_price"
-        sql = f"SELECT ins_date max_date FROM us_stock_list where symbol not in ( select symbol from us_etf_list ) GROUP BY ins_date HAVING COUNT(*) >= 5800 ORDER BY ins_date DESC LIMIT 1"
+        # sql = f"SELECT ins_date max_date FROM us_stock_price where symbol not in ( select symbol from us_etf_list ) GROUP BY ins_date HAVING COUNT(*) >= 5800 ORDER BY ins_date DESC LIMIT 1"
+        sql = "SELECT date max_date FROM us_stock_price GROUP BY date HAVING COUNT(*) >= 5800 ORDER BY date DESC LIMIT 1"
         mycursor.execute(sql)
         max_date = mycursor.fetchall()
         con.close()
@@ -110,7 +111,7 @@ if len(df_us_list) > 0 :
 
     print(f'start date : {start_date}, end date : {end_date}')
 
-    if start_date == end_date:
+    if start_date >= end_date:
         print('No need for udpate')    
         send_message(f"[Stock Update]No need for update")
     else:
