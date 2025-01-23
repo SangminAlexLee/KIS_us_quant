@@ -119,7 +119,7 @@ try:
             # break
         
         # 06시 이후 프로그램 종료 
-        elif (t_start - timedelta(hours=16) > t_now ) and (t_now > t_exit) :  
+        elif (t_start - timedelta(hours=3) > t_now ) and (t_now > t_exit) :  
             print(f't_start:{t_start}')
             print(f't_now:{t_now}')
             print(f't_exit:{t_exit}')
