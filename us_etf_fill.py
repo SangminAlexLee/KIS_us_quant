@@ -49,15 +49,16 @@ df_etf['ins_date'] = (date.today() - timedelta(days=1))
 
 print(f'df_eft : {df_etf}')
 engine, con, mycursor = db_conn()
-# df_etf.to_sql(name = 'us_stock_list', con=engine, if_exists='append', index=False, method="multi")
+df_etf.to_sql(name = 'us_stock_list', con=engine, if_exists='append', index=False, method="multi")
 con.close()
 
 send_message(f"[ETF Update]List udpate Finished for {date.today()}")
 
 try: 
     engine, con, mycursor = db_conn()
-    # sql = "SELECT max(date) max_date FROM us_stock_price"
-    sql = "SELECT date max_date FROM us_stock_price GROUP BY date HAVING COUNT(*) >= 5800 ORDER BY date DESC LIMIT 1"
+    base_eft_ticker = 'SPY'
+    sql = f"SELECT max(date) max_date FROM us_stock_price where symbol = '{base_etf_ticker}' "
+    # sql = "SELECT date max_date FROM us_stock_price GROUP BY date HAVING COUNT(*) >= 5800 ORDER BY date DESC LIMIT 1"
     mycursor.execute(sql)
     max_date = mycursor.fetchall()
     con.close()
