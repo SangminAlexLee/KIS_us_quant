@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 import pymysql
 import yfinance as yf
 from datetime import timedelta, date
+import datetime
 import time
 import requests
 import yaml
