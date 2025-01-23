@@ -78,7 +78,7 @@ except Exception as e:
 try:
     # US Stock 종목 최신 리스트 조회
     engine, con, mycursor = db_conn()
-    sql = "SELECT symbol FROM us_stock_list WHERE ins_date = (SELECT ins_date max_date FROM us_stock_list where symbol not in ( select symbol from us_etf_list ) GROUP BY ins_date HAVING COUNT(*) >= 5800 ORDER BY ins_date DESC LIMIT 1)"
+    sql = "SELECT * FROM us_stock_list WHERE ins_date = (SELECT ins_date max_date FROM us_stock_list where symbol not in ( select symbol from us_etf_list ) GROUP BY ins_date HAVING COUNT(*) >= 5800 ORDER BY ins_date DESC LIMIT 1)"
     mycursor.execute(sql)
     result = mycursor.fetchall()
     df_us_list = pd.DataFrame(result)
