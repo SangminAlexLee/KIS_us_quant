@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the script to execute
-SCRIPT_NAME="us_stock_fill.py"
+SCRIPT_NAME="us_stock_fill2.py"
 
 # Navigate to the script directory (adjust as needed)
 SCRIPT_DIR="/home/ec2-user/quant_invest/KIS_us_quant"  
