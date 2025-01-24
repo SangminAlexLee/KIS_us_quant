@@ -339,7 +339,7 @@ def buy(code="005930", qty="1",price="0", option='00'):
         "PDNO": code,
         "ORD_DVSN": "00",
         "ORD_QTY": str(int(qty)),
-        "OVRS_ORD_UNPR": f"{round(price,2)}",
+        "OVRS_ORD_UNPR": f"{round(float(price),2)}",
         "SLL_TYPE": "",
         "ORD_SVR_DVSN_CD": "0"
 
