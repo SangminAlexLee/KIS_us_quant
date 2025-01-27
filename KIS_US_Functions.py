@@ -618,7 +618,7 @@ def losscut_sell(losscut_ratio=-10):
         code = stock['ovrs_pdno']
         profit_ratio = float(stock['evlu_pfls_rt'])
         stock_name = stock['ovrs_item_name']
-        curr_price = stock['now_pric2']
+        curr_price = float(stock['now_pric2'])
         holding_qty = stock['ovrs_cblc_qty']
         print(f'{stock_name} 수익률 : {profit_ratio}')
         if profit_ratio < losscut_ratio:
