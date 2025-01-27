@@ -71,36 +71,42 @@ except Exception as e:
     max_date = [{'max_date' : t_minus_15}]
     
 start_date = (max_date[0]['max_date'] + timedelta(days=1)).strftime('%Y-%m-%d')
+# start_date = '2024-12-20'
 end_date = (date.today()).strftime('%Y-%m-%d')
 
 print(f'start date : {start_date}, end date : {end_date}')
 
-df_list = []
-count = 0
+if start_date >= end_date:
+    print('No need for udpate')    
+    send_message(f"[Stock Update]No need for update")
+else:
 
-for etf_ticker in df_etf.iterrows():
-    print(f'etf_ticker:{etf_ticker}')
-    # print(f'type:{type(etf_ticker[1]['Symbol'])}')
-    symbol = etf_ticker[1]['Symbol']
-    print(f'ticker : {symbol}')
-    print(f'start date : {start_date}, end date:{end_date}')
-    etf_data = yf.download(symbol, start=start_date, end=end_date)
+    df_list = []
+    count = 0
 
-    etf_data.reset_index(inplace=True)
-    etf_data.columns = ['_'.join(col) for col in etf_data.columns]
-    etf_data.columns = ['Date', 'Close', 'High', 'Low', 'Open', 'Volume']
-    etf_data['Adj Close'] =  etf_data['Close']
-    etf_data['Symbol'] =  symbol
-    etf_data = etf_data[['Symbol', 'Date', 'Close', 'Adj Close','Volume']]
-    print(f'Price date for {symbol} : {etf_data}')
-    df_list.append(etf_data)
-    count = count + 1
+    for etf_ticker in df_etf.iterrows():
+        print(f'etf_ticker:{etf_ticker}')
+        # print(f'type:{type(etf_ticker[1]['Symbol'])}')
+        symbol = etf_ticker[1]['Symbol']
+        print(f'ticker : {symbol}')
+        print(f'start date : {start_date}, end date:{end_date}')
+        etf_data = yf.download(symbol, start=start_date, end=end_date)
 
-df_list = pd.concat(df_list, ignore_index=True, axis=0)
-print(f'df_list : {df_list}')
+        etf_data.reset_index(inplace=True)
+        etf_data.columns = ['_'.join(col) for col in etf_data.columns]
+        etf_data.columns = ['Date', 'Close', 'High', 'Low', 'Open', 'Volume']
+        etf_data['Adj Close'] =  etf_data['Close']
+        etf_data['Symbol'] =  symbol
+        etf_data = etf_data[['Symbol', 'Date', 'Close', 'Adj Close','Volume']]
+        print(f'Price date for {symbol} : {etf_data}')
+        df_list.append(etf_data)
+        count = count + 1
 
-engine, con, mycursor = db_conn()
-df_list.to_sql(name = 'us_stock_price', con=engine, if_exists='append', index=False)
-con.close()
+    df_list = pd.concat(df_list, ignore_index=True, axis=0)
+    print(f'df_list : {df_list}')
 
-send_message(f"[ETF Update]Price update Finished:{count} Stocks")
+    engine, con, mycursor = db_conn()
+    df_list.to_sql(name = 'us_stock_price', con=engine, if_exists='append', index=False)
+    con.close()
+
+    send_message(f"[ETF Update]Price update Finished:{count} Stocks")

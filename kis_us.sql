@@ -4,7 +4,28 @@ select * from kis_token ;
 
 select * from holding_us_stock_details;
 
-select * from us_stock_price;
+select symbol from us_etf_list;
+
+SELECT date max_date FROM us_stock_price GROUP BY date HAVING COUNT(*) >= 5800 ORDER BY date DESC LIMIT 1;
+
+select count(1) from (select distinct symbol from us_stock_price where date >= '2025-01-22') a ;
+
+SELECT * FROM us_stock_list where ins_date >= '2025-01-18';
+
+SELECT * FROM us_stock_list WHERE ins_date = (SELECT MAX(ins_date) FROM us_stock_list) and symbol not in ( select symbol from us_etf_list );
+
+SELECT * FROM us_stock_list WHERE ins_date = (SELECT ins_date max_date FROM us_stock_list where symbol not in ( select symbol from us_etf_list ) 
+GROUP BY ins_date HAVING COUNT(*) >= 5800 ORDER BY ins_date DESC LIMIT 1);
+
+SELECT * FROM us_stock_list WHERE ins_date = (SELECT MAX(ins_date) FROM us_stock_list);
+
+SELECT date max_date FROM us_stock_price GROUP BY date HAVING COUNT(*) >= 5000 ORDER BY date DESC LIMIT 1;
+
+select * from us_stock_price where date = '2025-01-21';
+
+SELECT max(date) max_date FROM us_stock_price where symbol = 'SPY' ;
+
+select max(date) from us_stock_price ;
 
 alter table us_stock_price add primary key ( symbol(8) , date);
 
@@ -74,4 +95,6 @@ INSERT INTO holidays (year, date, holiday_name, country_code, is_public_holiday)
 commit;
 
 select * from holidays;
+
+
 

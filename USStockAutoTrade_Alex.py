@@ -74,7 +74,7 @@ try:
         t_start = t_now.replace(hour=23, minute=20, second=0, microsecond=0)
         t_mid_night = t_now.replace(hour=23, minute=59, second=59, microsecond=99)
         t_exit = t_now.replace(hour=6, minute=00, second=0,microsecond=0)
-        today = (datetime.datetime.today()-timedelta(days=1)).weekday()
+        today = (datetime.datetime.today()).weekday()
         if today == 6:  # 토요일이나 일요일이면 자동 종료
             send_message("주말이므로 프로그램을 종료합니다.")
             break
