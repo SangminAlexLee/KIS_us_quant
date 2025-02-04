@@ -71,7 +71,7 @@ try:
     while True:
         # send_message("=== While 문 진입 ===")
         t_now = datetime.datetime.now()
-        t_start = t_now.replace(hour=23, minute=20, second=0, microsecond=0)
+        t_start = t_now.replace(hour=23, minute=35, second=0, microsecond=0)
         t_mid_night = t_now.replace(hour=23, minute=59, second=59, microsecond=99)
         t_exit = t_now.replace(hour=6, minute=00, second=0,microsecond=0)
         today = (datetime.datetime.today()).weekday()
