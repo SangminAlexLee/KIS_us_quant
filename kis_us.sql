@@ -4,7 +4,8 @@ select * from kis_token ;
 
 select * from holding_us_stock_details;
 
-select symbol from us_etf_list;
+-- ETF Price 
+SELECT * FROM us_stock_price where symbol in (select symbol from us_etf_list) ;
 
 SELECT date max_date FROM us_stock_price GROUP BY date HAVING COUNT(*) >= 5800 ORDER BY date DESC LIMIT 1;
 

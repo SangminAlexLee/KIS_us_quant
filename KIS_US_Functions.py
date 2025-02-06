@@ -955,10 +955,11 @@ def profitcut_sell(profitcut_ratio=50, cut_amt=50):
             # print(f'df_holding_stock_details : {df_holding_stock_details}')
             max_profit = float(df_holding_stock_details.loc[df_holding_stock_details.ovrs_pdno == stock['ovrs_pdno']].frcr_evlu_pfls_amt.values[0])
             print(f'{stock_name} 현재수익 : {current_profit}, 최고수익 : {max_profit}, 익절 최소금액 : {cut_amt}, 익절 비율 : {profitcut_ratio}, 수익률 : {profit_ratio}')
-            # print(f' 익절 기준금액 : {int((profitcut_ratio/100)*max_profit)}')
+            curr_cut_amt = float((profitcut_ratio/100)*max_profit)
+            print(f' 익절 기준금액 : {curr_cut_amt}')
             
             # 최고 이익 금액이 cut_amt(10만) 를 초과 했을때 현재의 이익 금액이 최고 이익 금액 대비 profit_cut_ratio(50%) 이상 하락시 익절
-            if (max_profit > cut_amt) and ( int((profitcut_ratio/100)*max_profit) > curr_price ):
+            if (max_profit > cut_amt) and ( float((profitcut_ratio/100)*max_profit) > curr_price ):
                 stock_dict[code] = profit_ratio
                 send_message(f"[익절 종목]{stock_name}({code}) 수익률: {profit_ratio}")
                 time.sleep(0.1)
